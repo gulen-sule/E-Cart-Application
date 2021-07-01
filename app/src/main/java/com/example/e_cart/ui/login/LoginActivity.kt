@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null) {
             openMainActivity()
@@ -38,8 +38,6 @@ class LoginActivity : AppCompatActivity() {
         button.setOnClickListener {
             getUserLoginInfo()
         }
-
-
     }
 
     fun signInGoogle(profile_id: String) {
@@ -63,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginFunc() {
-     //   firebaseAuth.signInWithEmailAndPassword()
+        //   firebaseAuth.signInWithEmailAndPassword()
 //email and password login
         //google icin yeniden bak
     }
