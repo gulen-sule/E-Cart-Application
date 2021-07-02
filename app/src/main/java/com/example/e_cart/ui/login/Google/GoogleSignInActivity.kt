@@ -56,7 +56,7 @@ class GoogleSignInActivity : Activity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromInten
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 Log.d("taskSuccesful", task.isSuccessful.toString())
                 val accountData = task.getResult(ApiException::class.java)
