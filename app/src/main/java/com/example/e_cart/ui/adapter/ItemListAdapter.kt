@@ -5,10 +5,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_cart.R
+import com.example.e_cart.data.model.MaterialModel
 import com.example.e_cart.data.model.ShopListModel
 import com.example.e_cart.databinding.ItemListBinding
+import com.example.e_cart.ui.main.MainActivity
+import com.example.e_cart.ui.main.MainFragment
 
 class ItemListAdapter(private var shopList: List<ShopListModel>) : RecyclerView.Adapter<ItemListAdapter.ViewHolder>() {
+    val list = ArrayList<MaterialModel>()
 
     inner class ViewHolder(itemView: ItemListBinding) : RecyclerView.ViewHolder(itemView.root) {
         var eventBinding: ItemListBinding = itemView
@@ -20,9 +24,12 @@ class ItemListAdapter(private var shopList: List<ShopListModel>) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val list = shopList[position]
-        holder.eventBinding.ShopListTitle.text = list.Title
-
+        val listItem = shopList[position]
+        holder.eventBinding.ShopListTitle.text = listItem.Title
+        holder.eventBinding.ShopListRecyclerView.adapter = ShopMaterialAdapter(listItem.listOfMaterial as ArrayList?)
+        holder.eventBinding.floatingActionButtonShopList.setOnClickListener {
+        list.add(MaterialModel(name = "yumurta",price = 20.0,false))
+        }
     }
 
     override fun getItemCount(): Int {
