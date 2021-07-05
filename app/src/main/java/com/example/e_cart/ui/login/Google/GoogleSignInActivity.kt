@@ -1,15 +1,18 @@
 package com.example.e_cart.ui.login.Google
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import com.example.e_cart.MainActivity
+import com.example.e_cart.ui.main.MainActivity
 import com.example.e_cart.R
+import com.example.e_cart.data.SavedPreferenceUser
 import com.example.e_cart.databinding.ActivityGoogleLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -37,19 +40,25 @@ class GoogleSignInActivity : Activity() {
     }
 
     override fun onStart() {
+
         super.onStart()
-        if (auth.currentUser != null)
+        if (auth.currentUser != null) {
+//            val shared=getPreferences(Context.MODE_PRIVATE)
+//            val emailUser=shared.getString("EMAIL","email")
+//            Log.d("MainActicityOpenedTAG", emailUser!!)
             openMainActivity()
+
+        }
 
         binding.signInButton.setOnClickListener {
             signIn()
         }
     }
 
-    fun openMainActivity() {
+    private fun openMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish()//?
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -58,25 +67,26 @@ class GoogleSignInActivity : Activity() {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                Log.d("taskSuccesful", task.isSuccessful.toString())
                 val accountData = task.getResult(ApiException::class.java)
-                accountData!!.idToken!!.let { firebaseAuthWithGoogle(accountData.idToken!!) }
+                firebaseAuthWithGoogle(accountData)
             } catch (e: ApiException) {
                 Log.w(TAG, "signInWithCredential:failure", task.exception)
             }
         }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: String) {
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+        val idToken = account?.idToken
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
-//                    val user = auth.currentUser
-//                    updateUI(user)
+                    val sharedPreferences = this.getPreferences(Context.MODE_PRIVATE)
+                    SavedPreferenceUser.setUser(this.getPreferences(Context.MODE_PRIVATE), account!!)
+                    openMainActivity()
                 } else {
-                    Log.d("failure:", idToken)
+                    Log.d("failure:", idToken!!)
                     Log.w(TAG, "signInWithCredential", task.exception)
                 }
             }
@@ -87,6 +97,7 @@ class GoogleSignInActivity : Activity() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
+
 
 }
 

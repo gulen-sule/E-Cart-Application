@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Splash ekranında Action bar olmayacak bu yüzden kaldırıyoruz -->
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
+</resources>

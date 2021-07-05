@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.example.e_cart.MainActivity
+import com.example.e_cart.ui.main.MainActivity
 import com.example.e_cart.R
 import com.example.e_cart.databinding.ActivityFirebaseuiLoginBinding
 import com.firebase.ui.auth.AuthUI
