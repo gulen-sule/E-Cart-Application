@@ -17,5 +17,8 @@ class MainActivity : AppCompatActivity() {
         val fragmentContainer=findViewById<FragmentContainerView>(R.id.fragment_container_view_main)
     }
 
+    override fun onBackPressed() {
+
+    }
 
 }

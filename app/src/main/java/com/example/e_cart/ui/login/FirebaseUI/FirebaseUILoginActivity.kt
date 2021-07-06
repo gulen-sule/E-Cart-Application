@@ -39,10 +39,6 @@ class FirebaseUILoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         firebaseAuth = FirebaseAuth.getInstance()
-        val currentUser = firebaseAuth.currentUser
-        if (currentUser != null) {
-            openMainActivity()
-        }
         val button: Button = findViewById(R.id.loginButton)
         button.setOnClickListener {
             getUserLoginInfo()

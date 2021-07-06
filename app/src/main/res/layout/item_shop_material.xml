@@ -5,91 +5,81 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <CheckBox
             android:id="@+id/checkBoxNameOfMaterial"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginLeft="6dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:paddingRight="6dp"
-            android:text="NameOfMaterial"
+            android:layout_marginBottom="8dp"
+            android:paddingRight="8dp"
+            android:text="Alındı"
+            android:textSize="14sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-           android:id="@+id/linearLayoutNameEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="8dp"
-            android:paddingRight="6dp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <EditText
-                android:id="@+id/editTextNameOfMaterial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NameOfMaterial"
-                android:visibility="visible" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButtonNameEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                app:fabSize="mini"
-                app:maxImageSize="30dp"
-                app:srcCompat="@drawable/fui_ic_check_circle_black_128dp" />
-        </LinearLayout>
-
         <TextView
-            android:id="@+id/priceOfItemTextView"
+            android:id="@+id/nameOfMaterialTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:inputType="text"
+            android:padding="4dp"
+            android:text="name of the Material"
+            android:textColor="#403A3A"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxNameOfMaterial"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="Price Of Item: 0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/checkBoxNameOfMaterial"
-            app:layout_constraintTop_toTopOf="@+id/checkBoxNameOfMaterial" />
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/title_shadow_background"
+            app:layout_constraintBottom_toBottomOf="@+id/nameOfMaterialTextView"
+            app:layout_constraintStart_toEndOf="@+id/nameOfMaterialTextView"
+            app:layout_constraintTop_toTopOf="@+id/nameOfMaterialTextView">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutPriceEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/checkBoxNameOfMaterial"
-            app:layout_constraintTop_toTopOf="@+id/checkBoxNameOfMaterial">
+            <TextView
+                android:id="@+id/priceOfItemTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:inputType="text"
+                android:minWidth="40dp"
+                android:padding="8dp"
+                android:text="price"
+                android:textColor="#F1E9E9"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/priceOfItemEditText"
+            <TextView
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price Of Item: 0" />
-
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButtonPriceEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                app:fabSize="mini"
-                app:maxImageSize="30dp"
-                app:srcCompat="@drawable/fui_ic_check_circle_black_128dp" />
-        </LinearLayout>
+                android:paddingLeft="4dp"
+                android:paddingTop="8dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="8dp"
+                android:text="TL"
+                android:textColor="#DFD5D5"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/priceOfItemTextView"
+                app:layout_constraintStart_toEndOf="@+id/priceOfItemTextView"
+                app:layout_constraintTop_toTopOf="@+id/priceOfItemTextView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

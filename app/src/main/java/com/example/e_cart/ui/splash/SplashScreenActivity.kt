@@ -3,6 +3,7 @@ package com.example.e_cart.ui.splash
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -21,23 +22,25 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onStart()
 
         val layoutSplash = findViewById<ConstraintLayout>(R.id.splashScreeenLayout)
-        val animation= AnimationUtils.loadAnimation(applicationContext,R.anim.rotate)
-        val userShared = getPreferences(Context.MODE_PRIVATE)
+        val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.rotate)
+        val userShared =getSharedPreferences("e_cart_preferences",Context.MODE_PRIVATE)
 
         animation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
             }
 
             override fun onAnimationEnd(animation: Animation?) {
-                val intentMain = Intent(this@SplashScreenActivity, MainActivity::class.java)
-                val intentLogin = Intent(this@SplashScreenActivity, GoogleSignInActivity::class.java)
-                val userEmail = userShared.getString("EMAIL", "email")
-                if (userEmail!!.compareTo("email") == 0 || userShared == null) {
-                  startActivity(intentLogin)
+                val userEmail = userShared.getString("EMAIL", "EMAIL").toString()
+                Log.d("SplashEmailTAG", userEmail)
+                if (userEmail.compareTo("EMAIL") == 0 || userShared == null) {
+                    val intentLogin = Intent(this@SplashScreenActivity, GoogleSignInActivity::class.java)
+                    startActivity(intentLogin)
                     animation?.cancel()
                     finish()
                 } else {
+                    val intentMain = Intent(this@SplashScreenActivity, MainActivity::class.java)
                     startActivity(intentMain)
+                    animation?.cancel()
                     finish()
                 }
             }
@@ -45,8 +48,7 @@ class SplashScreenActivity : AppCompatActivity() {
             override fun onAnimationRepeat(animation: Animation?) {
             }
 
-        }
-        )
+        })
         layoutSplash.startAnimation(animation)
     }
 
