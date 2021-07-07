@@ -1,10 +1,8 @@
 package com.example.e_cart.ui.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.text.Editable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -12,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.e_cart.R
 import com.example.e_cart.data.model.MaterialModel
 import com.example.e_cart.databinding.ItemShopMaterialBinding
-import com.example.e_cart.ui.main.MainFragment
 
 class ShopMaterialAdapter(private var shopList: List<MaterialModel>?) :
     RecyclerView.Adapter<ShopMaterialAdapter.ViewHolder>() {
@@ -29,7 +26,7 @@ class ShopMaterialAdapter(private var shopList: List<MaterialModel>?) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val material = shopList?.get(position)
+        val material = shopList?.get(position)?.material
         val view = holder.eventBinding
         if (material != null) {
             view.nameOfMaterialTextView.text = material.name
@@ -38,13 +35,6 @@ class ShopMaterialAdapter(private var shopList: List<MaterialModel>?) :
         }
 
         setTextViewFocusable(view.priceOfItemTextView)
-        setTextViewFocusable(view.nameOfMaterialTextView)
-
-        view.priceOfItemTextView.setOnClickListener {
-
-        }.also {
-
-        }
 
     }
 

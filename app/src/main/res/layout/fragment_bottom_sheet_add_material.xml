@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:id="@+id/bottomSheetLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:behavior_peekHeight="140dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/productNameBottomSheetEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="8dp"
+                android:hint="please enter a product name"
+                android:padding="5dp"
+                app:layout_constraintStart_toStartOf="@+id/floatingActionButtonCloseSheet"
+                app:layout_constraintTop_toBottomOf="@+id/floatingActionButtonCloseSheet" />
+
+            <EditText
+                android:id="@+id/priceBottomSheetEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Price: "
+                android:inputType="numberDecimal"
+                android:padding="5dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/productNameBottomSheetEditText"
+                app:layout_constraintEnd_toStartOf="@+id/moneyTypeTextView"
+                app:layout_constraintTop_toTopOf="@+id/productNameBottomSheetEditText" />
+
+            <TextView
+                android:id="@+id/moneyTypeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="TL"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/priceBottomSheetEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/priceBottomSheetEditText" />
+
+            <Button
+                android:id="@+id/addMaterialButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:text="Add"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/moneyTypeTextView"
+                app:layout_constraintTop_toBottomOf="@+id/priceBottomSheetEditText" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButtonCloseSheet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_close"
+                app:fabSize="mini"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

@@ -13,7 +13,6 @@ import com.example.e_cart.data.model.ShopListModel
 import com.example.e_cart.databinding.ActivityGoogleLoginBinding
 import com.example.e_cart.ui.Const
 import com.example.e_cart.ui.main.MainActivity
-import com.example.e_cart.ui.splash.SplashScreenActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,9 +21,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
-import kotlin.math.log
 
 class GoogleSignInActivity : Activity() {
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -89,11 +86,9 @@ class GoogleSignInActivity : Activity() {
                     Log.d(TAG, "signInWithCredential:success")
                     val sharedPreferences = getSharedPreferences("e_cart_preferences",Context.MODE_PRIVATE)
                     SavedPreferenceUser.setUser(sharedPreferences, account!!)
-                    val databaseReference = FirebaseDatabase.getInstance()
-                    databaseReference.reference
-                        .child(Const.firstCollectionName)
+                    val databaseReference = Const.firebaseReferenceUserList
                         .child(account.id.toString())
-                        .child("listBasket").setValue(ShopListModel(title = ""))
+                        .child(Const.shopListsCollectionName).setValue(ShopListModel(title = ""))
                     openMainActivity()
                 } else {
                     Log.d("failure:", idToken!!)

@@ -102,14 +102,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_plus_circle"
             app:fabSize="mini"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+            app:layout_constraintTop_toTopOf="@+id/ShopListTitle"
             app:maxImageSize="28dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

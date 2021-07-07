@@ -1,8 +1,6 @@
 package com.example.e_cart.ui.main
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,19 +9,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.e_cart.R
 import com.example.e_cart.data.model.MaterialModel
+import com.example.e_cart.data.model.MaterialModelItem
 import com.example.e_cart.data.model.ShopListModel
 import com.example.e_cart.databinding.FragmentMainBinding
-import com.example.e_cart.ui.Const
 import com.example.e_cart.ui.adapter.ItemListAdapter
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.example.e_cart.ui.main.helperFragments.BottomSheetAddMaterialFragment
+import com.example.e_cart.ui.main.helperFragments.DeleteListDialogFragment
+import com.example.e_cart.ui.main.helperFragments.GetListTitleFragment
+import com.example.e_cart.ui.main.viewModel.MainFragmentViewModel
 
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private var list = ArrayList<ShopListModel>()
-    private lateinit var database: DatabaseReference
+    private lateinit var userId: String
+    private lateinit var viewModel: MainFragmentViewModel
 
 
+    private lateinit var bottomSheet: BottomSheetAddMaterialFragment
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         return binding.root
@@ -31,40 +33,48 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userShared = context?.getSharedPreferences("e_cart_preferences", Context.MODE_PRIVATE)
-        val userId = userShared?.getString("ID", "idx404NOT_FOUNDx")
-        database = FirebaseDatabase.getInstance().reference
-        database.child(Const.firstCollectionName).child(userId.toString()).child(Const.shopListsCollectionName).get().addOnSuccessListener {
-            it.children.forEach { data ->
-                Log.i("eachForTAG", data.getValue(ShopListModel::class.java).toString())
-                if(data.hasChildren())
-                list.add(data.getValue(ShopListModel::class.java) as ShopListModel)
-            }.also {
-                binding.MainScreenRecyclerView.adapter = ItemListAdapter(requireContext(),list)
-                binding.MainScreenRecyclerView.adapter?.notifyDataSetChanged()
-            }
-        }
-            .addOnFailureListener {
-                Log.d("MainFragment_TAG", it.stackTraceToString())
-            }
+        setViewModel()
+        userId = viewModel.getUserId()
+
         binding.floatingActionButton.setOnClickListener {
-            showDialog(userId)
+            showDialog()
         }
     }
 
     private lateinit var dialog: GetListTitleFragment
+    private val deleteListDialog = DeleteListDialogFragment()
 
-    private fun showDialog(id: String?) {
+    private fun showDialog() {
         dialog = GetListTitleFragment(onClicked = { title ->
             if (title != null) {
                 val shopItem = ShopListModel(title.toString(), ArrayList())
-                database.child(Const.firstCollectionName).child(id!!).child(Const.shopListsCollectionName).child(title.toString()).setValue(shopItem)
+                viewModel.addListToDatabase(title.toString())
                 list.add(shopItem)
             } else {
                 Toast.makeText(context, "Lutfen bir baslik giriniz", Toast.LENGTH_SHORT).show()//????
             }
         })
-
         dialog.show(childFragmentManager, "dialog")
+    }
+
+    private fun setViewModel() {
+        viewModel = MainFragmentViewModel(context) { list ->
+            binding.MainScreenRecyclerView.adapter = ItemListAdapter(requireContext(), list, { title, position ->
+                setBottomSheet(title, position)
+                bottomSheet.show(requireActivity().supportFragmentManager, "bottomSheetFragment")
+            }, {
+                deleteListDialog.show(requireActivity().supportFragmentManager, "delete_list_dialog")
+            })
+        }
+    }
+
+    private fun setBottomSheet(title: String, position: Int) {
+        bottomSheet = BottomSheetAddMaterialFragment { name, price ->
+            viewModel.addMaterialToDatabase(title, name, price)
+            bottomSheet.dismiss()
+            bottomSheet.show(requireActivity().supportFragmentManager, "bottomSheetFragment")
+            list[position].listOfMaterial?.add(MaterialModel(MaterialModelItem(name, price)))
+            binding.MainScreenRecyclerView.adapter!!.notifyDataSetChanged()
+        }
     }
 }
